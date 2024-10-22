@@ -1,0 +1,47 @@
+C51 COMPILER V9.01   3_2A                                                                  10/22/2024 20:38:48 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE 3_2A
+OBJECT MODULE PLACED IN 3-2A.OBJ
+COMPILER INVOKED BY: F:\keil\C51\BIN\C51.EXE 3-2A.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #include<intrins.h>
+   3          sbit s1=P0^0;
+   4          void delay(unsigned int i)
+   5           {
+   6   1       unsigned int k;
+   7   1       for(k=0;k<i;k++);
+   8   1       }
+   9          void main(   )             //主函数
+  10          {  unsigned  char   i;     //定义字符型变量i
+  11   1         P1=0xff ;                   //P1口LED灯全灭
+  12   1         while(1) 
+  13   1         {  s1=1;                     //读引脚数据前先设置为1
+  14   2            if(s1==0)                //检测到按键按下 
+  15   2         {  delay(1200);          //延时10ms 去抖动
+  16   3             if(s1==0)                //再次检测到按键按下    
+  17   3            {   P1=0xFE;  
+  18   4                 for(i=0;i<8;i++)          //循环8次
+  19   4                  { delay(50000);           // 延时
+  20   5                     P1=_crol_(P1,1); }        // P1左移1位           
+  21   4            } }
+  22   2      else P1=0x00;                //点亮发光二极管
+  23   2        } 
+  24   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     75    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
